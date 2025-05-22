@@ -29,6 +29,24 @@
       loadSidebar: true, 
       subMaxLevel: 2,
       search: 'auto',
+      plugins: [
+        function(hook) {
+          hook.beforeEach(function(content) {
+            // 如果是 README.md，插入目录
+            if (window.location.hash === '#/') {
+              return content + '\n\n## 📖 目录\n<div id="toc"></div>';
+            }
+            return content;
+          });
+          hook.doneEach(function() {
+            // 将侧边栏目录复制到 README
+            if (window.location.hash === '#/') {
+              document.getElementById('toc').innerHTML = 
+                document.querySelector('.sidebar-nav').innerHTML;
+            }
+          });
+        }
+      ]
     }
    </script>
 
