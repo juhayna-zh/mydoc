@@ -1,2 +1,2 @@
-- [首页](mydoc/README.md)
-- [N2语法](mydoc/N2.md)
+- [首页](README.md)
+- [N2语法](N2.md)
