@@ -5,16 +5,15 @@
    <meta http-equiv="X-UA-Compatible" content="IE=edge">
    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1.0, shrink-to-fit=no, viewport-fit=cover">
    <meta name="description" content="">
-   <title></title>
+   <title>My Docs</title>
 
    <!-- Themes (light + dark) -->
    <link rel="stylesheet" media="(prefers-color-scheme: dark)" href="https://cdn.jsdelivr.net/npm/docsify-themeable@0/dist/css/theme-simple-dark.css">
    <link rel="stylesheet" media="(prefers-color-scheme: light)" href="https://cdn.jsdelivr.net/npm/docsify-themeable@0/dist/css/theme-simple.css">
 
-   <!-- Custom Styles -->
    <style>
      :root {
-       /* --theme-hue: 325; */
+       /* 可自定义主题色，如 --theme-hue: 325; */
      }
    </style>
 </head>
@@ -26,23 +25,25 @@
       name: 'My Docs',
       repo: 'your-github-repo-url',
       basePath: '/mydoc/',
-      loadSidebar: true, 
+      loadSidebar: true,
       subMaxLevel: 2,
       search: 'auto',
       plugins: [
         function(hook) {
           hook.beforeEach(function(content) {
-            // 如果是 README.md，插入目录
             if (window.location.hash === '#/') {
               return content + '\n\n## 📖 目录\n<div id="toc"></div>';
             }
             return content;
           });
           hook.doneEach(function() {
-            // 将侧边栏目录复制到 README
             if (window.location.hash === '#/') {
               document.getElementById('toc').innerHTML = 
                 document.querySelector('.sidebar-nav').innerHTML;
+            }
+            // ✅ 渲染公式
+            if (window.MathJax) {
+              MathJax.typesetPromise();
             }
           });
         }
@@ -50,16 +51,28 @@
     }
    </script>
 
-   <!-- Required -->
+   <!-- Docsify -->
    <script src="https://cdn.jsdelivr.net/npm/docsify@4/lib/docsify.min.js"></script>
    <script src="https://cdn.jsdelivr.net/npm/docsify-themeable@0/dist/js/docsify-themeable.min.js"></script>
 
-   <!-- Recommended -->
+   <!-- Plugins -->
    <script src="https://cdn.jsdelivr.net/npm/docsify@4/lib/plugins/search.js"></script>
    <script src="https://cdn.jsdelivr.net/npm/docsify@4/lib/plugins/zoom-image.min.js"></script>
 
-    <!-- 数学公式支持（KaTeX） -->
-    <script src="https://cdn.jsdelivr.net/npm/docsify-katex@latest/dist/docsify-katex.js"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
+   <!-- ✅ MathJax 支持 -->
+   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+   <script>
+     window.MathJax = {
+       tex: {
+         inlineMath: [['$', '$'], ['\\(', '\\)']],
+         displayMath: [['$$', '$$'], ['\\[', '\\]']]
+       },
+       options: {
+         skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+       },
+       svg: { fontCache: 'global' }
+     };
+   </script>
+   <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </body>
 </html>
